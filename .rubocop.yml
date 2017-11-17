@@ -6,3 +6,12 @@ Style/StringLiterals:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+    - 'beryl.gemspec'
+
+Layout/ExtraSpacing:
+  Exclude:
+    - 'beryl.gemspec'
+
+Layout/SpaceAroundOperators:
+  Exclude:
+    - 'beryl.gemspec'

@@ -9,13 +9,18 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Miguel Landaeta"]
   spec.email         = ["miguel@miguel.cc"]
 
-  spec.summary       = %q{Smalltalk on JRuby}
-  spec.description   = %q{Yet another Smalltalk implementation, targeting the JVM by using JRuby's infrastructure}
+  spec.summary       = "Smalltalk on JRuby"
+  spec.description   = %(
+    Yet another Smalltalk implementation,
+    this time targeting the JVM by using JRuby's infrastructure
+  )
   spec.homepage      = "https://github.com/nomadium/beryl"
   spec.license       = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
+  # Prevent pushing this gem to RubyGems.org.
+  # To allow pushes either set the 'allowed_push_host'
+  # to allow pushing to a single host or
+  # delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
   else

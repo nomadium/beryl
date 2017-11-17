@@ -8,4 +8,4 @@ RuboCop::RakeTask.new(:rubocop) do |t|
   t.options = %w[--display-cop-names --extra-details --display-style-guide]
 end
 
-task :default => :spec
+task default: :spec
