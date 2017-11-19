@@ -7,15 +7,10 @@ RSpec.describe Beryl::Parser do
 
   describe "#parse" do
     context "when valid syntax is provided" do
-      it "returns a parsed hash from the code provided" do
+      it "parses integers" do
         code = "42"
-        h = parser.parse(code)
-        expect(h[:integer].to_s).to eq(code)
-      end
-      it "returns an object with source code meta data" do
-        code = "9"
-        h = parser.parse(code)
-        expect(h[:integer].line_and_column).to eq([1, 1])
+        ast = parser.parse(code)
+        expect(ast.value).to eq(code.to_i)
       end
     end
     context "when not valid syntax is provided" do

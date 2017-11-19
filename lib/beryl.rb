@@ -3,6 +3,7 @@
 require "beryl/version"
 require "beryl/error"
 require "beryl/parser"
+require "beryl/syntax"
 
 # Beryl programming language implementation
 module Beryl
