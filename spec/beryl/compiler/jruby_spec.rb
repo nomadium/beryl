@@ -17,17 +17,37 @@ RSpec.describe Beryl::Compiler::Jruby do
   end
   describe "::compile" do
     context "when valid syntax is provided" do
-      it "compiles integers" do
-        value = 7
-        ast = Beryl::Syntax::Integer.new(value)
-        root = backend.compile(ast)
-        expect(root.value).to eq(value)
+      it "returns a JRuby AST root node" do
+        ast = Beryl::Syntax::Integer.new(7)
+        root_node = double
+
+        allow(org.jruby.ast.RootNode).to receive(:new).and_return root_node
+
+        result = backend.compile(ast, context: { scope: double })
+        expect(result).to eq(root_node)
       end
     end
     context "when non valid syntax is compiled" do
       it "raises error" do
         ast = Beryl::Syntax::Literal.new(:whatevs)
-        expect { backend.compile(ast) }
+        compiler_context = { scope: double }
+        expect { backend.compile(ast, context: compiler_context) }
+          .to raise_error(Beryl::Error)
+      end
+    end
+  end
+  describe "::_compile" do
+    context "when valid syntax is provided" do
+      it "compiles integers" do
+        value = 42
+        node = Beryl::Syntax::Integer.new(value)
+        result = backend.send(:_compile, node)
+        expect(result.value).to eq(value)
+      end
+    end
+    context "when non valid syntax is provided" do
+      it "raises error" do
+        expect { backend.send(:_compile, Beryl::Syntax::Literal.new("%$#2")) }
           .to raise_error(Beryl::Error)
       end
     end

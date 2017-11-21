@@ -11,14 +11,24 @@ module Beryl
         org.jruby.lexer.yacc.SimpleSourcePosition.new("/dev/null", 0)
       end
 
-      def self.compile(ast)
-        case ast
+      def self.compile(ast, context:)
+        org.jruby.ast.RootNode.new(
+          noposition,
+          context[:scope],
+          _compile(ast),
+          "(none)"
+        )
+      end
+
+      def self._compile(node)
+        case node
         when Beryl::Syntax::Integer
-          org.jruby.ast.FixnumNode.new(noposition, ast.value)
+          org.jruby.ast.FixnumNode.new(noposition, node.value)
         else
-          raise Beryl::Error, "unsupported syntax: #{ast.class}"
+          raise Beryl::Error, "unsupported syntax: #{node.class}"
         end
       end
+      private_class_method :_compile
     end
   end
 end

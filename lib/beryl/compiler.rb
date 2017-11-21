@@ -9,10 +9,10 @@ module Beryl
       @backend = backend
     end
     attr_reader :backend
-    def compile(ast)
+    def compile(ast, context: {})
       case @backend
       when :jruby
-        Beryl::Compiler::Jruby.compile(ast)
+        Beryl::Compiler::Jruby.compile(ast, context: context)
       else
         raise Beryl::Error, "Unsupported compilation backend: #{@backend}"
       end

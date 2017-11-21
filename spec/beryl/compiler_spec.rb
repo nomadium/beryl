@@ -19,7 +19,7 @@ RSpec.describe Beryl::Compiler do
         result = double
 
         allow(Beryl::Compiler::Jruby)
-          .to receive(:compile).with(ast).and_return(result)
+          .to receive(:compile).with(ast, context: {}).and_return(result)
 
         expect(compiler.compile(ast)).to eq(result)
       end
