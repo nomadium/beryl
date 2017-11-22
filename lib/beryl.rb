@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "pry" if ENV["BERYL_DEBUG"]
+
 require "beryl/version"
 require "beryl/error"
 require "beryl/parser"
