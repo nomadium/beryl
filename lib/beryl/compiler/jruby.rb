@@ -14,22 +14,10 @@ module Beryl
         org.jruby.ast.RootNode.new(
           noposition,
           context[:scope],
-          _compile(ast),
+          ast.compile,
           "(none)"
         )
       end
-
-      def self._compile(node)
-        case node
-        when Beryl::Syntax::Integer
-          org.jruby.ast.FixnumNode.new(noposition, node.value)
-        when Beryl::Syntax::Call
-          node.compile
-        else
-          raise Beryl::Error, "unsupported syntax: #{node.class}"
-        end
-      end
-      private_class_method :_compile
     end
   end
 end

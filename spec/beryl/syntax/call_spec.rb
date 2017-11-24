@@ -15,22 +15,6 @@ RSpec.describe Beryl::Syntax::Call do
   end
   let(:op) { %w[+].sample }
 
-  describe "#compile" do
-    context "when an unsupported back end is used" do
-      it "raises an error" do
-        expect { syntax_call.compile(back_end: :unsupported) }
-          .to raise_error(Beryl::Error)
-      end
-    end
-    context "when supported back end is used" do
-      # this test can be clearly improved
-      it "returns the back end compiler result" do
-        jruby_call_node = syntax_call.jruby_compile
-        expect(syntax_call.compile(back_end: :jruby).name)
-          .to eq(jruby_call_node.name)
-      end
-    end
-  end
   describe "#jruby_compile" do
     it "returns a jruby call node" do
       jruby_call_node = syntax_call.jruby_compile
@@ -43,12 +27,12 @@ RSpec.describe Beryl::Syntax::Call do
     it "returns a jruby call node with requested receiver" do
       jruby_call_node = syntax_call.jruby_compile
       expect(jruby_call_node.receiver_node.value)
-        .to eq(Beryl::Compiler::Jruby.send(:_compile, receiver).value)
+        .to eq(receiver.compile.value)
     end
     it "returns a jruby call node with requested argument" do
       jruby_call_node = syntax_call.jruby_compile
       expect(jruby_call_node.args_node.last.value)
-        .to eq(Beryl::Compiler::Jruby.send(:_compile, argument).value)
+        .to eq(argument.compile.value)
     end
   end
   describe "#_jruby_array_node" do

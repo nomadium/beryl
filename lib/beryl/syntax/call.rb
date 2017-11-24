@@ -11,21 +11,11 @@ module Beryl
       end
       attr_reader :name, :receiver, :args
 
-      def compile(back_end: DEFAULT_BACK_END)
-        case back_end
-        when :jruby
-          jruby_compile
-        else
-          raise Beryl::Error,
-                "#{back_end} is not a supported compilation back end"
-        end
-      end
-
       def jruby_compile
         noposition = Beryl::Compiler::Jruby.noposition
         org.jruby.ast.CallNode.new(
           noposition,
-          Beryl::Compiler::Jruby.send(:_compile, receiver),
+          receiver.compile,
           name,
           _jruby_array_node,
           nil
@@ -38,7 +28,7 @@ module Beryl
         noposition = Beryl::Compiler::Jruby.noposition
         org.jruby.ast.ArrayNode.new(
           noposition,
-          Beryl::Compiler::Jruby.send(:_compile, args.first)
+          args.first.compile
         )
       end
     end

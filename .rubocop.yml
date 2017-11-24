@@ -15,3 +15,8 @@ Layout/ExtraSpacing:
 Layout/SpaceAroundOperators:
   Exclude:
     - 'beryl.gemspec'
+
+RSpec/SubjectStub:
+  Exclude:
+    # this is an abstract class anyway
+    - 'spec/beryl/syntax/node_spec.rb'
