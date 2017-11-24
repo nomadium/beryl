@@ -12,5 +12,5 @@ require "beryl/cli"
 
 # Beryl programming language implementation
 module Beryl
-  # Your code goes here...
+  DEFAULT_BACK_END = :jruby
 end

@@ -5,8 +5,12 @@ module Beryl
     # Transformation rules from low-level parser output
     # to high-level syntax object
     class Transformer < Parslet::Transform
-      rule integer: simple(:integer) do
-        Beryl::Syntax::Integer.new(integer)
+      rule int: simple(:int) do
+        Beryl::Syntax::Integer.new(int)
+      end
+
+      rule(left: simple(:left), op: "+", right: simple(:right)) do
+        Beryl::Syntax::Call.new("+", receiver: left, args: [right])
       end
     end
   end

@@ -3,6 +3,7 @@
 require "bundler/setup"
 require "beryl"
 require "pry"
+require "securerandom"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

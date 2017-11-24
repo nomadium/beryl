@@ -44,6 +44,19 @@ RSpec.describe Beryl::Compiler::Jruby do
         result = backend.send(:_compile, node)
         expect(result.value).to eq(value)
       end
+      it "compiles very basic function calls, like a sum" do
+        receiver = Beryl::Syntax::Integer.new(2)
+        argument = Beryl::Syntax::Integer.new(2)
+        node = Beryl::Syntax::Call.new("+",
+                                       receiver: receiver,
+                                       args: [argument])
+        result = backend.send(:_compile, node)
+        expect(result.name).to eq("+")
+        expect(result.receiver_node.value)
+          .to eq(described_class.send(:_compile, receiver).value)
+        expect(result.args_node.last.value)
+          .to eq(described_class.send(:_compile, argument).value)
+      end
     end
     context "when non valid syntax is provided" do
       it "raises error" do

@@ -6,7 +6,6 @@ module Beryl
   class Compiler
     # JRuby compilation backend
     module Jruby
-      # should this be private or protected??
       def self.noposition
         org.jruby.lexer.yacc.SimpleSourcePosition.new("/dev/null", 0)
       end
@@ -24,6 +23,8 @@ module Beryl
         case node
         when Beryl::Syntax::Integer
           org.jruby.ast.FixnumNode.new(noposition, node.value)
+        when Beryl::Syntax::Call
+          node.compile
         else
           raise Beryl::Error, "unsupported syntax: #{node.class}"
         end
