@@ -30,13 +30,18 @@ module Beryl
       match("[A-Za-z]")
     end
 
+    rule(:string) do
+      str("'") >> (str("''") | str("'").absent? >> any).repeat.as(:string) >>
+        str("'")
+    end
+
     rule(:identifier) do
       letter >> (letter | integer | str("_")).repeat
     end
 
     rule(:message) do
       identifier.as(:receiver) >> space >> identifier.as(:msg) >> str(":") >>
-        space >> integer.as(:arg)
+        space >> (integer | string).as(:arg)
     end
 
     rule(:expression) do

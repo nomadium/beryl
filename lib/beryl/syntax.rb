@@ -10,5 +10,6 @@ module Beryl
     autoload :Integer,  "beryl/syntax/integer"
     autoload :Call,     "beryl/syntax/call"
     autoload :Constant, "beryl/syntax/constant"
+    autoload :String,   "beryl/syntax/string"
   end
 end

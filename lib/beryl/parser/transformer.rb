@@ -9,6 +9,10 @@ module Beryl
         Beryl::Syntax::Integer.new(int)
       end
 
+      rule string: simple(:string) do
+        Beryl::Syntax::String.new(string)
+      end
+
       rule(left: simple(:left), op: "+", right: simple(:right)) do
         Beryl::Syntax::Call.new("+", receiver: left, args: [right])
       end

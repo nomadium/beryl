@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "spec_helper"
+
 RSpec.describe Beryl::Syntax::Constant do
   describe "#jruby_compile" do
     subject(:constant) { described_class.new(name) }
