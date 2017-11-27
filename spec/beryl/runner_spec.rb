@@ -36,4 +36,7 @@ RSpec.describe Beryl::Runner do
       expect(runner.execute).to eq(0)
     end
   end
+  # it should be tested
+  # describe "#_run_bootstrap" do
+  # end
 end

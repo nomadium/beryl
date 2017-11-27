@@ -27,6 +27,8 @@ module Beryl
     attr_reader :parser, :platform, :runtime, :runtime_config
 
     def execute
+      _run_bootstrap
+
       ast = parser.parse(io)
       scope = runtime.current_context.current_scope
       compiler_context = { scope: scope }
@@ -40,6 +42,13 @@ module Beryl
 
     def _io(args)
       args.key?(:expression) ? args[:expression].to_s : IO.read(args[:file])
+    end
+
+    def _run_bootstrap
+      bootstrap_base_name = "bootstrap.rb"
+      bootstrap_module = File.join(File.expand_path(__dir__),
+                                   bootstrap_base_name)
+      runtime.execute_script(IO.read(bootstrap_module), bootstrap_base_name)
     end
   end
 end

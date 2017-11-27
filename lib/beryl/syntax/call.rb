@@ -5,7 +5,7 @@ module Beryl
     # Method call behavior definition
     class Call < Node
       def initialize(name, receiver:, args:)
-        @name     = name
+        @name     = name.to_s
         @receiver = receiver
         @args     = args
       end

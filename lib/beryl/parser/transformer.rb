@@ -12,6 +12,14 @@ module Beryl
       rule(left: simple(:left), op: "+", right: simple(:right)) do
         Beryl::Syntax::Call.new("+", receiver: left, args: [right])
       end
+
+      rule(receiver: simple(:receiver),
+           msg:      simple(:msg),
+           arg:      subtree(:int)) do
+        Beryl::Syntax::Call.new(msg,
+                                receiver: Beryl::Syntax::Constant.new(receiver),
+                                args: [int])
+      end
     end
   end
 end

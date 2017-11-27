@@ -26,8 +26,21 @@ module Beryl
       integer.as(:left) >> operator.as(:op) >> expression.as(:right)
     end
 
+    rule(:letter) do
+      match("[A-Za-z]")
+    end
+
+    rule(:identifier) do
+      letter >> (letter | integer | str("_")).repeat
+    end
+
+    rule(:message) do
+      identifier.as(:receiver) >> space >> identifier.as(:msg) >> str(":") >>
+        space >> integer.as(:arg)
+    end
+
     rule(:expression) do
-      sum | integer
+      sum | integer | message
     end
 
     root(:expression)
