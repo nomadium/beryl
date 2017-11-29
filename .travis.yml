@@ -2,4 +2,15 @@ sudo: false
 language: ruby
 rvm:
   - 2.4.2
+  - jruby-9.1.14.0
+  - jruby-head
+jdk:
+  - oraclejdk8
 before_install: gem install bundler -v 1.16.0
+branches:
+  only:
+  - /.*/
+matrix:
+  allow_failures:
+  - rvm: 2.4.2
+  - rvm: jruby-head
