@@ -28,12 +28,12 @@ module Beryl
 
     def execute
       _run_bootstrap
+      _execute(io)
+    end
 
-      ast = parser.parse(io)
-      scope = runtime.current_context.current_scope
-      compiler_context = { scope: scope }
-      root_ast = Beryl::Compiler.new.compile(ast, context: compiler_context)
-      runtime.run_normally(root_ast)
+    def repl
+      _run_bootstrap
+      _repl_loop
     end
 
     private
@@ -41,7 +41,11 @@ module Beryl
     attr_reader :io
 
     def _io(args)
-      args.key?(:expression) ? args[:expression].to_s : IO.read(args[:file])
+      args.key?(:expression) ? args[:expression].to_s : IO.read(_file(args))
+    end
+
+    def _file(args)
+      args[:file] || "/dev/null"
     end
 
     def _run_bootstrap
@@ -49,6 +53,26 @@ module Beryl
       bootstrap_module = File.join(File.expand_path(__dir__),
                                    bootstrap_base_name)
       runtime.execute_script(IO.read(bootstrap_module), bootstrap_base_name)
+    end
+
+    def _execute(str)
+      ast = parser.parse(str)
+      scope = runtime.current_context.current_scope
+      compiler_context = { scope: scope }
+      root_ast = Beryl::Compiler.new.compile(ast, context: compiler_context)
+      runtime.run_normally(root_ast)
+    end
+
+    def _repl_loop
+      loop do
+        print "st> "
+        expr = (STDIN.gets || "").chop
+        if expr == ""
+          puts
+          break
+        end
+        puts "=> #{_execute(expr).inspect}"
+      end
     end
   end
 end

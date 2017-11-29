@@ -28,4 +28,16 @@ RSpec.describe Beryl::CLI do
       expect(cli.execute(file_name)).to eq(exec_result)
     end
   end
+
+  describe "#repl" do
+    it "returns the results of evaluating code from repl" do
+      runner = double
+      repl   = double
+
+      allow(Beryl::Runner).to receive(:new).and_return runner
+      allow(runner).to receive(:repl).and_return repl
+
+      expect(cli.repl).to eq(repl)
+    end
+  end
 end

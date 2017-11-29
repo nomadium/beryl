@@ -36,7 +36,59 @@ RSpec.describe Beryl::Runner do
       expect(runner.execute).to eq(0)
     end
   end
-  # it should be tested
-  # describe "#_run_bootstrap" do
+  describe "#repl" do
+    it "returns the repl execution result" do
+      repl_loop_result = double
+
+      # rubocop:disable RSpec/SubjectStub
+      allow(runner).to receive(:_repl_loop).and_return repl_loop_result
+
+      expect(runner.repl).to eq(repl_loop_result)
+    end
+  end
+  describe "#_run_bootstrap" do
+    it "executes Ruby code to set up Beryl environment" do
+      allow(IO).to receive(:read).and_return "42"
+      expect(runner.send(:_run_bootstrap)).to eq(42)
+    end
+  end
+  describe "#_execute" do
+    it "returns the result from runtime execution" do
+      expect(runner.send(:_execute, "42")).to eq(42)
+    end
+  end
+  describe "#_io" do
+    context "when an expression is provided" do
+      it "returns a string containing the expression" do
+        expr = "something"
+        expect(runner.send(:_io, expression: expr)).to eq(expr)
+      end
+    end
+    context "when a file is provided" do
+      it "returns a string with the contents of the file" do
+        file_name = double
+        file_content = "something_else"
+
+        allow(IO).to receive(:read).and_return file_content
+
+        expect(runner.send(:_io, file: file_name)).to eq(file_content)
+      end
+    end
+  end
+  describe "#_file" do
+    context "when a file is provided" do
+      it "returns the file name" do
+        file_name = double
+        expect(runner.send(:_file, file: file_name)).to eq(file_name)
+      end
+    end
+    context "when a file is not provided" do
+      it "returns '/dev/null'" do
+        expect(runner.send(:_file, {})).to eq("/dev/null")
+      end
+    end
+  end
+  # unsure yet how to test this
+  # describe "#_repl_loop" do
   # end
 end
