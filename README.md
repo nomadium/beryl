@@ -33,12 +33,12 @@ Or install it yourself as:
 Just run beryl with your program:
 
 ```sh
-$ bundle exec bin/beryl -e 42
+$ bundle exec bin/beryl -e "Transcript show: 'Hello'"
 ```
 
-The example is that trivial because beryl is in a pre-alpha state
-and the only implemented feature is to put integers in the stack.
-Hey, it didn't crash! (yet)
+The example is that trivial because Beryl is in a pre-alpha state
+and the only implemented features are: to put integers in the stack,
+sums and to print strings to stdout.
 
 ## Development
 
@@ -70,3 +70,14 @@ The gem is available as open source under the terms of the
 Everyone interacting in the Beryl project’s codebases, issue trackers,
 chat rooms and mailing lists is expected to follow the
 [code of conduct](https://github.com/nomadium/beryl/blob/master/CODE_OF_CONDUCT.md).
+
+## References
+
+This work is inspired by:
+
+* [Reak](https://github.com/rkh/Reak) (Smalltalk on Rubinius) by Konstantin Haase.
+
+* [Redline Smalltalk](http://www.redline.st/) (Smalltalk on the JVM) by James Ladd.
+
+* [JRuby](https://github.com/jruby/jruby) (Ruby implementation on the JVM)
+  by Charles Nutter, Thomas Enebo, et al.
